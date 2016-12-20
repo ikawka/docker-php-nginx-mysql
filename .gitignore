@@ -3,5 +3,7 @@
 !coker-compose.yml
 !Dockerfile
 !README.md
-
+!www
+!conf
+!sites
 mysql/*
