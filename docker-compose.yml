@@ -7,11 +7,7 @@ front:
     - "222:22"
   links:
     - mysql:mysql
-#    - mongo:mongo
     - memcached:memcached
-#    - redis:redis
-#    - elasticsearch:elasticsearch
-#    - rabbitmq:rabbitmq
   volumes:
     - ./www:/var/www
     - ./sites:/etc/nginx/conf.d
@@ -26,29 +22,7 @@ mysql:
   environment:
     MYSQL_ROOT_PASSWORD: password
 
-#mongo:
-#  image: mongo
-#  ports:
-#    - "27017:27017"
-
 memcached:
   image: memcached
   ports:
     - "11211:11211"
-
-#redis:
-#  image: redis
-#  ports:
-#    - "6379:6379"
-
-#elasticsearch:
-#  image: elasticsearch
-#  ports:
-#    - "9200:9200"
-#    - "9300:9300"
-
-#rabbitmq:
-#  image: rabbitmq:3.6.1-management
-#  ports:
-#    - "15672:15672"
-#    - "5672:5672"
