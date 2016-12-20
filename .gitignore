@@ -1,3 +1,7 @@
 *
 !.gitignore
+!coker-compose.yml
+!Dockerfile
+!README.md
+
 mysql/*
