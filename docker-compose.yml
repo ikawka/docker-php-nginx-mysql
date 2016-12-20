@@ -4,7 +4,6 @@ front:
     - "80:80"
     - "443:443"
     - "9000:9000"
-    - "222:22"
   links:
     - mysql:mysql
     - memcached:memcached
