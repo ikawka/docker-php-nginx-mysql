@@ -24,7 +24,15 @@ RUN apt-get update && apt-get install -my \
   php5-mcrypt \
   php5-sqlite \
   php5-xdebug \
-  php-apc
+  php-apc \
+  php5-imagick \
+  cron
+
+# For yaml-parse if needed
+RUN apt-get install -my php5-dev php-pear libyaml-dev
+RUN pecl install yamL
+RUN sh -c "echo 'extension=yaml.so' >> /etc/php5/mods-available/yaml.ini"
+RUN php5enmod yaml
 
 # Ensure that PHP5 FPM is run as root.
 RUN sed -i "s/user = www-data/user = root/" /etc/php5/fpm/pool.d/www.conf

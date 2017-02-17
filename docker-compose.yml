@@ -1,27 +1,57 @@
-front:
-  build: .
-  ports:
-    - "80:80"
-    - "443:443"
-    - "9000:9000"
-  links:
-    - mysql:mysql
-    - memcached:memcached
-  volumes:
-    - ./www:/var/www
-    - ./sites:/etc/nginx/conf.d
-    - ./logs:/var/log/supervisor
+version: '2'
 
-mysql:
-  image: mysql
-  ports:
-    - "3306:3306"
-  volumes:
-    - ./mysql:/var/lib/mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: password
+services:
+    front:
+      build: .
+      ports:
+        - "80:80"
+        - "443:443"
+        - "9000:9000"
+      links:
+        - mysql:mysql
+        - memcached:memcached
+      volumes:
+        - ./www:/var/www
+        - ./sites:/etc/nginx/conf.d
+        - ./logs:/var/log/supervisor
+      networks:
+        web:
+          ipv4_address: 172.16.238.10
+          ipv6_address: 2001:3984:3989::10
 
-memcached:
-  image: memcached
-  ports:
-    - "11211:11211"
+    mysql:
+      image: mysql
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./mysql:/var/lib/mysql
+        - ./conf/mysql:/etc/mysql/conf.d
+      environment:
+        MYSQL_ROOT_PASSWORD: password
+
+      networks:
+        web:
+          ipv4_address: 172.16.238.11
+          ipv6_address: 2001:3984:3989::11
+
+    memcached:
+      image: memcached
+      ports:
+        - "11211:11211"
+      networks:
+        web:
+          ipv4_address: 172.16.238.13
+          ipv6_address: 2001:3984:3989::13
+
+networks:
+  web:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+        gateway: 172.16.238.1
+      - subnet: 2001:3984:3989::/64
+        gateway: 2001:3984:3989::1

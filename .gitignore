@@ -1,6 +1,6 @@
 *
 !.gitignore
-!coker-compose.yml
+!doker-compose.yml
 !Dockerfile
 !README.md
 !www
